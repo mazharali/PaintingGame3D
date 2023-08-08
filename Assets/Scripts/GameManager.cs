@@ -1,0 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
+    public bool allowFail;
+    public List<string> tags = new List<string>();
+    public ComplexObject complexObject;
+    public TMPro.TextMeshProUGUI textElement;
+    public GameObject confettiEffects;
+    public GameObject WonUI;
+    
+    public string startHint ="Find a ";
+    const string highlightColor = "#FFFF00";
+
+    void Awake(){
+        instance = this;
+    }
+    void Start(){
+        Invoke("UpdateText", 4f);
+    }
+    void UpdateText(){
+        if(tags.Count > 0){
+            textElement.transform.parent.DOPunchScale(new Vector3(0.3f, 0.3f, 0.3f), 0.3f);
+            textElement.text = startHint + "<color=" + highlightColor + ">" + tags[0].ToLower() + "!</color>";
+        }else
+            textElement.transform.parent.gameObject.SetActive(false);
+    }
+    void Update(){
+        if (Input.GetMouseButtonDown(0)){
+            var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+            if (Physics.Raycast(ray, out var hit)){
+                ClickableObject obj = FindClickableObject(hit.collider);
+                if (obj != null)
+                    obj.Colorify(hit.point);
+                else
+                    Debug.Log("Hit nothing important (" + hit.collider.name + ")");
+            }
+        }
+    }
+    public void checkWin(){
+        if(tags.Count > 0) return;
+        
+        Debug.Log("Game over!");
+        if(complexObject.GetComponent<Animator>())
+            complexObject.GetComponent<Animator>().SetTrigger("Animate");
+        Invoke("Confetti", 0.2f);
+        Invoke("Won", 2.8f);
+    }
+    void Confetti(){
+        confettiEffects.SetActive(true);
+        complexObject.ColorifyAll();
+    }
+    void Won(){
+        WonUI.SetActive(true);
+    }
+    public ClickableObject FindClickableObject(Collider col){
+        return complexObject.FindClickableObject(col);
+    }
+    public bool clicked(string clickedTag){
+        if(tags[0] == clickedTag){
+            tags.RemoveAt(0);
+            UpdateText();
+            return true;
+        }
+        return false;
+    }
+}
