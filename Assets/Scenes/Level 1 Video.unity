@@ -817,14 +817,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.18841241, y: 0.2770141, z: -0.05549843, w: -0.94057643}
-  m_LocalPosition: {x: 5, y: 5.21, z: -7.75}
+  m_LocalRotation: {x: 0.15903415, y: -0.2786088, z: 0.0468469, w: 0.9459866}
+  m_LocalPosition: {x: 3.8135602, y: 4.2966833, z: -5.912767}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.08632, y: -32.821, z: 0.001}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4085,30 +4085,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allowFail: 1
   tags:
-  - Ground
+  - Boat
+  - Ladder
+  - Flag
   - Castle
   - Stairs
   - Balcony
-  - Fooliage
-  - Boat
-  - Ladder
-  - Paddles
-  - Gold Coins
-  - Boat
-  - Hammer
-  - Logs
-  - Barrel
-  - Flag
-  - Stand
-  - Barrel
-  - Palm Tree
-  - Pots
-  - Door
-  - Stand
-  - Curtain
-  - Knife
-  - Paint Brushes
-  - Paint
   complexObject: {fileID: 1976378141}
   textElement: {fileID: 293273407}
   confettiEffects: {fileID: 1391738645}

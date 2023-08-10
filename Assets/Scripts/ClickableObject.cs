@@ -10,7 +10,7 @@ public class ClickableObject
     private bool Colored = false;
     public MeshRenderer[] components;
     public float effectDuration = 0.75f;
-    public float RS = 0.3f;
+    private float scaleRatio = 0.3f;
 
     public bool isIn(Collider child){
         foreach (var col in components)
@@ -41,10 +41,10 @@ public class ClickableObject
                 ScaleAround(renderer.transform, scalePivot);
             });
         }
+        GameManager.instance.clicked(tag);
         DOVirtual.DelayedCall(effectDuration, ()=>{
             // Manage score
             Debug.Log(tag + " clicked");
-            GameManager.instance.clicked(tag);
             GameManager.instance.checkWin();
         });
 
@@ -94,13 +94,14 @@ public class ClickableObject
         Vector3 A = target.transform.localPosition;
         Vector3 B = target.transform.parent.InverseTransformPoint(pivot);
 
-
         Vector3 C = A - B; // diff from object pivot to desired pivot/origin
 
         // calc final position post-scale
-        Vector3 FP = B + C * RS;
+        Vector3 FP = B + C * scaleRatio;
+
+
 
         // finally, actually perform the scale/translation
-        target.DOPunchScale(new Vector3(RS, RS, RS), 0.3f);
+        target.DOPunchScale(scaleRatio * target.localScale, 0.3f);
     }
 }

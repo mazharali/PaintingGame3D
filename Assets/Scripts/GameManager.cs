@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI textElement;
     public GameObject confettiEffects;
     public GameObject WonUI;
+    public AudioClip CorrectSound;
+    public AudioClip WrongSound;
     
     public string startHint ="Find a ";
     const string highlightColor = "#FFFF00";
@@ -20,7 +23,7 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
     void Start(){
-        Invoke("UpdateText", 4f);
+        UpdateText();
     }
     void UpdateText(){
         if(tags.Count > 0){
@@ -31,8 +34,14 @@ public class GameManager : MonoBehaviour
     }
     void Update(){
         if (Input.GetMouseButtonDown(0)){
+            Invoke("CheckAgain", 0.1f); // to void mistaking a hold for a tap
+        }
+    }
+    void CheckAgain(){
+        if(!Input.GetMouseButton(0)){
             var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-            if (Physics.Raycast(ray, out var hit)){
+            if (Physics.Raycast(ray, out var hit))
+            {
                 ClickableObject obj = FindClickableObject(hit.collider);
                 if (obj != null)
                     obj.Colorify(hit.point);
@@ -61,11 +70,17 @@ public class GameManager : MonoBehaviour
         return complexObject.FindClickableObject(col);
     }
     public bool clicked(string clickedTag){
-        if(tags[0] == clickedTag){
+        if(tags.Count > 0 && tags[0] == clickedTag){
             tags.RemoveAt(0);
             UpdateText();
+            GetComponent<AudioSource>().PlayOneShot(CorrectSound);
             return true;
+        }else{
+            GetComponent<AudioSource>().PlayOneShot(WrongSound);
+            return false;
         }
-        return false;
+    }
+    public void NextLevel(){
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex+1) % SceneManager.sceneCountInBuildSettings);
     }
 }
