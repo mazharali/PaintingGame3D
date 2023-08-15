@@ -37,7 +37,7 @@ public class CameraRotation : MonoBehaviour{
                 if (GetComponent<TutorialManager>() && GetComponent<TutorialManager>().tutorialStep == TutorialStep.Rotate)
                     GetComponent<TutorialManager>().tutorialStep = TutorialStep.Zoom;
             }
-
+            swipeDirection.x = swipeDirection.x % 360;
             swipeDirection.y = Mathf.Clamp(swipeDirection.y, minXRotAngleTouch, maxXRotAngleTouch);
         }
     }

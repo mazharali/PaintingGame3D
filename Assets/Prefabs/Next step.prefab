@@ -143,7 +143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Find the <color=#FFFF00>boat!</color>
+  m_text: Find the <color=#FFFF00>[object]!</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 71b4f46e9ac8908429e248c9dc9d657d, type: 2}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: 71b4f46e9ac8908429e248c9dc9d657d,

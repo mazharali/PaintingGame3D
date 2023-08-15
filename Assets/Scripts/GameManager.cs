@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI textElement;
     public GameObject confettiEffects;
     public GameObject WonUI;
+    public GameObject HintUI;
     public AudioClip CorrectSound;
     public AudioClip WrongSound;
     public Color blinkColor;
@@ -30,13 +31,15 @@ public class GameManager : MonoBehaviour
         if(tags.Count > 0){
             textElement.transform.parent.DOPunchScale(new Vector3(0.3f, 0.3f, 0.3f), 0.3f);
             textElement.text = startHint + "<color=" + highlightColor + ">" + tags[0].ToLower() + "!</color>";
-        }else
+        }else{
             textElement.transform.parent.gameObject.SetActive(false);
+            HintUI.SetActive(false);
+        }
     }
     private float holdDuration=0f;
     void Update(){
         if (Input.GetMouseButtonDown(0)){
-            Invoke("CheckAgain", 0.1f); // to void mistaking a hold for a tap
+            Invoke("CheckAgain", 0.2f); // to void mistaking a hold for a tap
             holdDuration = 0;
         }
         if(Input.GetMouseButton(0)){
@@ -45,7 +48,7 @@ public class GameManager : MonoBehaviour
         
         if(Input.GetMouseButtonUp(0)){
             CancelInvoke("CheckAgain");
-            if(holdDuration < 0.1f) CheckAgain();
+            if(holdDuration < 0.2f) CheckAgain();
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
@@ -68,30 +71,46 @@ public class GameManager : MonoBehaviour
     public void Hint(){
         if(Hinting) return;
 
+        Hinting = true;
+
         string wantedTag = tags[0];
         ClickableObject obj = null;
         foreach(var comp in complexObject.components){
-            if(comp.tag == wantedTag){
+            if(comp.tag == wantedTag && !comp.Colored){
                 obj = comp;
                 break;
             }
         }
 
         if(obj == null) return;
-
-        foreach(var renderer in obj.components)
-            StartCoroutine(Blink(renderer, renderer.material.GetColor("_BaseColor"), blinkColor, 0.165f, 3));
-
-        Hinting = true;
+        CameraRotation cr = GetComponent<CameraRotation>();
+        obj.swipeDirection = new Vector2(obj.swipeDirection.x % 360, obj.swipeDirection.y % 360);
+        float distance = Vector2.Distance(cr.swipeDirection, obj.swipeDirection);
+        StartCoroutine(RotateLookAt(cr, obj, cr.swipeDirection, distance / 360f));
     }
-    IEnumerator Blink(MeshRenderer renderer, Color startColor, Color endColor, float duration, int times){
+    IEnumerator RotateLookAt(CameraRotation cr, ClickableObject obj, Vector2 swipeDirection, float duration){
+        var startTime = Time.time;
+        var endTime = startTime + duration;
+        while (Time.time < endTime){
+            float perc = (Time.time - startTime) / duration;
+            cr.swipeDirection = Vector2.Lerp(swipeDirection, obj.swipeDirection, perc);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        foreach (var renderer in obj.components)
+            foreach (var mat in renderer.materials)
+                StartCoroutine(Blink(mat, renderer.material.GetColor("_BaseColor"), blinkColor, 0.165f, 3));
+    }
+    IEnumerator Blink(Material mat, Color startColor, Color endColor, float duration, int times){
         int count = 0;
         while(count < times){
             var startTime = Time.time;
             var endTime = startTime + duration;
             while (Time.time < endTime){
                 float perc = (Time.time - startTime) / duration;
-                renderer.material.SetColor("_BaseColor", Color.Lerp(startColor, endColor, perc));
+                mat.SetColor("_BaseColor", Color.Lerp(startColor, endColor, perc));
                 yield return null;
             }
             yield return new WaitForSecondsRealtime(0.1f);
@@ -101,7 +120,7 @@ public class GameManager : MonoBehaviour
             while (Time.time < endTime)
             {
                 float perc = (Time.time - startTime) / duration;
-                renderer.material.SetColor("_BaseColor", Color.Lerp(endColor, startColor, perc));
+                mat.SetColor("_BaseColor", Color.Lerp(endColor, startColor, perc));
                 yield return null;
             }
             count++;

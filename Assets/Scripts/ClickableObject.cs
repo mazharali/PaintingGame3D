@@ -7,10 +7,11 @@ using DG.Tweening;
 public class ClickableObject
 {
     public string tag;
-    private bool Colored = false;
+    public bool Colored = false;
     public MeshRenderer[] components;
     public float effectDuration = 0.75f;
     private float scaleRatio = 0.3f;
+    public Vector2 swipeDirection;
 
     public bool isIn(Collider child){
         foreach (var col in components)
