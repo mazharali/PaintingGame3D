@@ -32,8 +32,11 @@ public class CameraRotation : MonoBehaviour{
         if (Input.touchCount == 1){
             touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Moved)
+            if (touch.phase == TouchPhase.Moved){
                 swipeDirection += touch.deltaPosition * Time.deltaTime * touchRotateSpeed;
+                if (GetComponent<TutorialManager>() && GetComponent<TutorialManager>().tutorialStep == TutorialStep.Rotate)
+                    GetComponent<TutorialManager>().tutorialStep = TutorialStep.Zoom;
+            }
 
             swipeDirection.y = Mathf.Clamp(swipeDirection.y, minXRotAngleTouch, maxXRotAngleTouch);
         }

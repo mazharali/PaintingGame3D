@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public GameObject WonUI;
     public AudioClip CorrectSound;
     public AudioClip WrongSound;
-    
+    public Color blinkColor;
+
     public string startHint ="Find a ";
     const string highlightColor = "#FFFF00";
 
@@ -32,10 +33,23 @@ public class GameManager : MonoBehaviour
         }else
             textElement.transform.parent.gameObject.SetActive(false);
     }
+    private float holdDuration=0f;
     void Update(){
         if (Input.GetMouseButtonDown(0)){
             Invoke("CheckAgain", 0.1f); // to void mistaking a hold for a tap
+            holdDuration = 0;
         }
+        if(Input.GetMouseButton(0)){
+            holdDuration += Time.deltaTime;
+        }
+        
+        if(Input.GetMouseButtonUp(0)){
+            CancelInvoke("CheckAgain");
+            if(holdDuration < 0.1f) CheckAgain();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+            Hint();
     }
     void CheckAgain(){
         if(!Input.GetMouseButton(0)){
@@ -49,6 +63,50 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Hit nothing important (" + hit.collider.name + ")");
             }
         }
+    }
+    private bool Hinting = false;
+    public void Hint(){
+        if(Hinting) return;
+
+        string wantedTag = tags[0];
+        ClickableObject obj = null;
+        foreach(var comp in complexObject.components){
+            if(comp.tag == wantedTag){
+                obj = comp;
+                break;
+            }
+        }
+
+        if(obj == null) return;
+
+        foreach(var renderer in obj.components)
+            StartCoroutine(Blink(renderer, renderer.material.GetColor("_BaseColor"), blinkColor, 0.165f, 3));
+
+        Hinting = true;
+    }
+    IEnumerator Blink(MeshRenderer renderer, Color startColor, Color endColor, float duration, int times){
+        int count = 0;
+        while(count < times){
+            var startTime = Time.time;
+            var endTime = startTime + duration;
+            while (Time.time < endTime){
+                float perc = (Time.time - startTime) / duration;
+                renderer.material.SetColor("_BaseColor", Color.Lerp(startColor, endColor, perc));
+                yield return null;
+            }
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            startTime = Time.time;
+            endTime = startTime + duration;
+            while (Time.time < endTime)
+            {
+                float perc = (Time.time - startTime) / duration;
+                renderer.material.SetColor("_BaseColor", Color.Lerp(endColor, startColor, perc));
+                yield return null;
+            }
+            count++;
+        }
+        Hinting = false;
     }
     public void checkWin(){
         if(tags.Count > 0) return;

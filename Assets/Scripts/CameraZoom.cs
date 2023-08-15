@@ -48,6 +48,8 @@ public class CameraZoom : MonoBehaviour{
         if (offset == 0)
             return;
 
+        if(GetComponent<TutorialManager>() && GetComponent<TutorialManager>().tutorialStep == TutorialStep.Zoom)
+            GetComponent<TutorialManager>().tutorialStep = TutorialStep.Done;
         Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView - (offset * speed), MaxFoV, MinFoV);
     }
 }
