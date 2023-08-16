@@ -13,8 +13,7 @@ public class WaterAnimation : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        x += speed * Time.deltaTime;
-        y += speed * Time.deltaTime;
+        x -= speed * Time.deltaTime;
         GetComponent<MeshRenderer>().material.mainTextureOffset = new Vector2(x, y);
     }
 }
