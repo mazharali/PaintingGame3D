@@ -4268,18 +4268,21 @@ MonoBehaviour:
     components:
     - {fileID: 1396548138279562148}
     effectDuration: 0.75
+    scaleRatio: 0.1
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Floor
     Colored: 0
     components:
     - {fileID: 6368263518029931711}
     effectDuration: 2
+    scaleRatio: 0
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Walls
     Colored: 0
     components:
     - {fileID: 1906127800205035031}
     effectDuration: 2
+    scaleRatio: 0
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Window
     Colored: 0
@@ -4287,30 +4290,35 @@ MonoBehaviour:
     - {fileID: 7491899522048389531}
     - {fileID: 3099052649302770364}
     effectDuration: 2
+    scaleRatio: 0
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Globe
     Colored: 0
     components:
     - {fileID: 3239222293585429289}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Frame
     Colored: 0
     components:
     - {fileID: 5810356563890071470}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Frame
     Colored: 0
     components:
     - {fileID: 5142502468262856493}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Frame
     Colored: 0
     components:
     - {fileID: 9180688208347929824}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: TV Table
     Colored: 0
@@ -4318,12 +4326,14 @@ MonoBehaviour:
     - {fileID: 8811601167059438640}
     - {fileID: 4278888844898219324}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -105, y: -25.534506}
   - tag: Shoes
     Colored: 0
     components:
     - {fileID: 8170740329108952512}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Shelf
     Colored: 0
@@ -4332,12 +4342,14 @@ MonoBehaviour:
     - {fileID: 7119384110945853618}
     - {fileID: 1234225951912967969}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Skateboard
     Colored: 0
     components:
     - {fileID: 1036336784661494819}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Desk
     Colored: 0
@@ -4348,30 +4360,35 @@ MonoBehaviour:
     - {fileID: 6195992488822701764}
     - {fileID: 6195992489024374019}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Radio
     Colored: 0
     components:
     - {fileID: 7813901158924533478}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.53451}
   - tag: Chair
     Colored: 0
     components:
     - {fileID: 4280352133549797338}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: TV
     Colored: 0
     components:
     - {fileID: 3239222295221992866}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -105, y: -25.534506}
   - tag: Basket
     Colored: 0
     components:
     - {fileID: 45867100003879184}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Posters
     Colored: 0
@@ -4395,42 +4412,49 @@ MonoBehaviour:
     - {fileID: 7712603797486358198}
     - {fileID: 2673683911306754250}
     effectDuration: 2
+    scaleRatio: 0.3
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Carpet
     Colored: 0
     components:
     - {fileID: 1222890894541865083}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Tennis Racket
     Colored: 0
     components:
     - {fileID: 5477477289669034031}
     effectDuration: 0.75
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Laptop
     Colored: 0
     components:
     - {fileID: 5965023383630781653}
     effectDuration: 1
+    scaleRatio: 0.3
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Boxes
     Colored: 0
     components:
     - {fileID: 3239222294979799555}
     effectDuration: 1
+    scaleRatio: 0.3
     swipeDirection: {x: -12.8, y: -25.534506}
   - tag: Basket
     Colored: 0
     components:
     - {fileID: 1722064552}
     effectDuration: 1
+    scaleRatio: 0.3
     swipeDirection: {x: -77.94, y: -25.534506}
   - tag: Basket
     Colored: 0
     components:
     - {fileID: 4432216770224155249}
     effectDuration: 1
+    scaleRatio: 0.3
     swipeDirection: {x: -77.94, y: -25.534506}
 --- !u!1 &3465077763740929074
 GameObject:

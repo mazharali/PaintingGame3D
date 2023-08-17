@@ -10,7 +10,7 @@ public class ClickableObject
     public bool Colored = false;
     public MeshRenderer[] components;
     public float effectDuration = 0.75f;
-    private float scaleRatio = 0.3f;
+    public float scaleRatio = 0.3f;
     public Vector2 swipeDirection;
 
     public bool isIn(Collider child){
